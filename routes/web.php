@@ -13,5 +13,4 @@
 
 Route::get('/', "CollectionController@index");
 Route::resource('collections', "CollectionController");
-
-
+Route::resource('task', "TaskController");

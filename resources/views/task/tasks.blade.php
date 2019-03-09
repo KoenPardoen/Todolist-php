@@ -42,7 +42,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{ Form::open(array('url' => 'collections')) }}
+                    {{ Form::open(array('url' => 'collections/' . $collection->id)) }}
                     <div class="form-group">
                         {{ Form::label('title', 'Title') }}
                         {{ Form::text('title', Input::old('title'), array('class' => 'form-control')) }}
@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group">
                         {{ Form::label('duration', 'Duration') }}
-                        {{ Form::text('description', Input::old('Description'), array('class' => 'form-control')) }}
+                        {{ Form::text('duration', Input::old('Description'), array('class' => 'form-control')) }}
                     </div>
                     <div class="form-group">
                         {{ Form::label('status', 'Status') }}
