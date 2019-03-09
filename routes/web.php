@@ -12,4 +12,6 @@
 */
 
 Route::get('/', "CollectionController@index");
-Route::resource('/', "TaskController");
+Route::resource('collections', "CollectionController");
+
+

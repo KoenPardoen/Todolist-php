@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Collection;
+use Validator;
 
 class CollectionController extends Controller
 {
@@ -15,7 +16,7 @@ class CollectionController extends Controller
     public function index()
     {
         $collections = Collection::all();
-        return view("todolists",compact("collections"));
+        return view("list.index",compact("collections"));
     }
 
     /**
@@ -25,7 +26,7 @@ class CollectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('collections');
     }
 
     /**
@@ -36,7 +37,26 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'title' => 'required',
+            'description' => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect('collections/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }else {
+            // store
+            $collection = new Collection();
+
+            $collection->title = $request->title;
+            $collection->description = $request->description;
+            $collection->save();
+
+            // redirect
+            return redirect('collections');
+        }
     }
 
     /**
@@ -47,7 +67,9 @@ class CollectionController extends Controller
      */
     public function show($id)
     {
-        //
+        $collections = Collection::all();
+        $collection = Collection::find($id);
+        return view("task.tasks",compact("collection","collections"));
     }
 
     /**
@@ -58,7 +80,9 @@ class CollectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $collections = Collection::all();
+        $collection = Collection::find($id);
+        return view("list.editList",compact("collection","collections"));
     }
 
     /**
@@ -70,7 +94,26 @@ class CollectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'title' => 'required',
+            'description' => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect('collections/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }else {
+            // store
+            $collection = collection::find($id);
+
+            $collection->title = $request->input('title');
+            $collection->description = $request->input('description') ;
+            $collection->save();
+
+            // redirect
+            return redirect('collections');
+        }
     }
 
     /**
@@ -81,6 +124,9 @@ class CollectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $collection = collection::find($id);
+        $collection->delete();
+
+        return redirect('collections');
     }
 }

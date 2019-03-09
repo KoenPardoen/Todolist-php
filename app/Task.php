@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    public function collection() {
+    public function collections() {
        return $this->belongsTo("App\Collection");
     }
 }
