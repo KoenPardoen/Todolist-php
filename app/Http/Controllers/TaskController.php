@@ -70,7 +70,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -79,9 +79,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        //
+        return view("task.editTask",compact("task"));
     }
 
     /**
@@ -93,7 +93,29 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'title' => 'required',
+            'description' => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect('task/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }else {
+            // store
+            $task = Task::find($id);
+
+            $task->collection_id = $request->input('collection_id');
+            $task->title = $request->input('title');
+            $task->description = $request->input('description');
+            $task->status = $request->input('status');
+            $task->duration = $request->input('duration');
+            $task->save();
+
+            // redirect
+            return redirect(Route('showCollection', array($request->collection_id)));
+        }
     }
 
     /**
@@ -103,7 +125,11 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $task = task::find($id);
+        $collection_id = $task->collection_id;
+        $task->delete();
+
+        return redirect(Route('showCollection', array($collection_id)));
     }
 }

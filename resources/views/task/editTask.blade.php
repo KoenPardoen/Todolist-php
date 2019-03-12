@@ -1,10 +1,9 @@
-@extends("templates.layout")
-@section("content")
+@extends("templates.layoutTask")
+@section("taskContent")
 <div class="container">
 
-    <h1>Edit {{ $collection->title }}</h1>
-
-    {{ Form::open(array('url' => 'collections')) }}
+    <h1>Edit Task</h1>
+    {{ Form::model($task, array('route' => array('task.update', $task->id), 'method' => 'PUT')) }}
     <div class="form-group">
         {{ Form::label('title', 'Title') }}
         {{ Form::text('title', Input::old('title'), array('class' => 'form-control')) }}
@@ -12,20 +11,24 @@
 
     <div class="form-group">
         {{ Form::label('description', 'Description') }}
-        {{ Form::text('description', Input::old('Description'), array('class' => 'form-control')) }}
+        {{ Form::text('description', Input::old('description'), array('class' => 'form-control')) }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('status', 'Status') }}
+        {{ Form::select('status', array('progress' => 'Progress', 'incompleet' => 'Incompleet', 'completed' => 'Completed'), 'progress', array('class' => 'form-control')) }}
     </div>
     <div class="form-group">
         {{ Form::label('duration', 'Duration') }}
-        {{ Form::text('description', Input::old('Description'), array('class' => 'form-control')) }}
+        {{ Form::text('duration', Input::old('duration'), array('class' => 'form-control')) }}
     </div>
-    <div class="form-group">
-        {{ Form::label('status', 'Status') }}
-        {{ Form::select('size', array('P' => 'Progress', 'I' => 'Incompleet', 'C' => 'Completed'), 'P') }}
-    </div>
+
+
     <div class="modal-footer">
-        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-        {{ Form::submit('Create list', array('class' => 'btn btn-primary')) }}
+        <a class="btn btn-default" href="{{URL::to('collections/')}}">Cancel</a>
+        {{ Form::submit('Edit task', array('class' => 'btn btn-primary')) }}
     </div>
+    <input type="hidden" value="{{$task->collection_id}}" name="collection_id">
     {{ Form::close() }}
 
 </div>

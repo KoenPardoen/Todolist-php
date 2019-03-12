@@ -25,3 +25,12 @@ i {
 i:hover {
     color: rgba(0, 0, 0, 0.7);
 }
+
+td .DltICon .trashIcon{
+    padding: 0;
+}
+
+.taskActions > form{
+    display: inherit;
+    float: right;
+}

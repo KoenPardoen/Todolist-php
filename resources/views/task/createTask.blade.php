@@ -18,7 +18,7 @@
 
     <div class="form-group">
         {{ Form::label('status', 'Status') }}
-        {{ Form::select('status', array('progress' => 'Progress', 'incompleet' => 'Incompleet', 'completed' => 'Completed'), 'progress', array('class' => 'form-control')) }}
+        {{ Form::select('status', array('progress' => 'Progress', 'incomplete' => 'Incomplete', 'completed' => 'Completed'), 'progress', array('class' => 'form-control')) }}
     </div>
     <div class="form-group">
         {{ Form::label('duration', 'Duration') }}
