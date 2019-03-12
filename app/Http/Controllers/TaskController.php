@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+use App\Task;
 
 class TaskController extends Controller
 {
@@ -13,8 +15,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::all();
-        return view("task.index",compact("tasks"));
+        $collections = Collection::all();
+        return view("list.index",compact("collections"));
     }
 
     /**
@@ -22,9 +24,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($collection_id)
     {
-        //
+        return view("task.createTask",compact("task", "collection_id"));
     }
 
     /**
@@ -41,20 +43,22 @@ class TaskController extends Controller
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return redirect('collections/create')
+            return redirect('task/create')
                         ->withErrors($validator)
                         ->withInput();
         }else {
             // store
-            $collection = new Collection();
+            $task = new Task();
 
+            $task->collection_id = $request->collection_id;
             $task->title = $request->title;
             $task->description = $request->description;
+            $task->status = $request->status;
             $task->duration = $request->duration;
-            $collection->save();
+            $task->save();
 
             // redirect
-            return redirect('collections');
+            return redirect(Route('showCollection', array($request->collection_id)));
         }
     }
 

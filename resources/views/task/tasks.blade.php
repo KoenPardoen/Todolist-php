@@ -28,45 +28,6 @@
       @endforeach
     </tbody>
   </table>
-  <button type="button" data-toggle="modal" data-target="#addTaskModal" class="btn btn-outline-secondary btn-lg btn-block">ADD TASK</button>
+  <a  href="{{URL::to('task/create/' . $collection->id)}}" class="btn btn-outline-secondary btn-lg btn-block">ADD TASK</a>
 </div>
-
-<!-- add task -->
-<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add new task</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {{ Form::open(array('url' => 'collections/' . $collection->id)) }}
-                    <div class="form-group">
-                        {{ Form::label('title', 'Title') }}
-                        {{ Form::text('title', Input::old('title'), array('class' => 'form-control')) }}
-                    </div>
-
-                    <div class="form-group">
-                        {{ Form::label('description', 'Description') }}
-                        {{ Form::text('description', Input::old('Description'), array('class' => 'form-control')) }}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::label('duration', 'Duration') }}
-                        {{ Form::text('duration', Input::old('Description'), array('class' => 'form-control')) }}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::label('status', 'Status') }}
-                        {{ Form::select('size', array('P' => 'Progress', 'I' => 'Incompleet', 'C' => 'Completed'), 'P') }}
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        {{ Form::submit('Create list', array('class' => 'btn btn-primary')) }}
-                    </div>
-                    {{ Form::close() }}
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

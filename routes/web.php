@@ -14,3 +14,6 @@
 Route::get('/', "CollectionController@index");
 Route::resource('collections', "CollectionController");
 Route::resource('task', "TaskController");
+Route::post('/task/{id}', 'TaskController@update');
+Route::get('/task/create/{collectionId}', 'TaskController@create');
+Route::get('collections/{collectionId}', 'CollectionController@show')->name('showCollection');
